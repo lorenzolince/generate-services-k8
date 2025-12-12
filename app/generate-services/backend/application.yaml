@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: generatebackend
+  namespace: argocd   # Argo CD siempre gestiona sus apps desde este namespace
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/lorenzolince/genericDeploy.git
+    targetRevision: HEAD   # o "main" si tu branch principal es main
+    path: helmcharts/genericservice
+    helm:
+      valueFiles:
+        - development_generate-service.yaml
+      parameters:
+        - name: genericservice
+          value: generatebackend
+        - name: image.repository
+          value: registry.llince.com/generate-service-backend
+        - name: service.enabled
+          value: "true"
+        - name: LIQUIBASE_RUN
+          value: "true"
+        - name: ingress.enabled
+          value: "true"
+        - name: volumes.enabled
+          value: "false"
+        - name: replicaCount
+          value: "2"
+        - name: paipalSecret_Name
+          value: paypal-dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: generate-service
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
