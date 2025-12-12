@@ -1,22 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: generate-frontend
+  name: genericserviceui
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/lorenzolince/genericDeploy.git
-    targetRevision: main
+    targetRevision: HEAD
     path: helmcharts/genericserviceui
     helm:
-      releaseName: genericserviceui   # 👈 igual que en tu comando manual
       valueFiles:
         - deployment_values.yaml
       parameters:
         - name: NEXTAUTH_URL
           value: https://generate-service.com
-        - name: paipalSecret_Name     # 👈 corrige typo para que coincida con el chart
+        - name: paipalSecret_Name
           value: paypal-dev
   destination:
     server: https://kubernetes.default.svc
