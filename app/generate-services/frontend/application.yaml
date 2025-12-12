@@ -2,12 +2,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: genericserviceui
-  namespace: argocd
+  namespace: argocd   # Argo CD siempre gestiona sus apps desde este namespace
 spec:
   project: default
   source:
     repoURL: https://github.com/lorenzolince/genericDeploy.git
-    targetRevision: HEAD
+    targetRevision: HEAD   # o "main" si tu branch principal es main
     path: helmcharts/genericserviceui
     helm:
       valueFiles:
@@ -20,3 +20,8 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: generate-service
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    
