@@ -14,11 +14,12 @@ spec:
         - deployment_values.yaml
       parameters:
         - name: NEXTAUTH_URL
-          value: https://generate-service.com
+          value: "https://generate-service.com"
         - name: paipalSecret_Name
-          value: paypal-dev
+          value: "paypal-dev"
         - name: AUTH_DEBUG
-          value: true
+          value: "true"
+
   destination:
     server: https://kubernetes.default.svc
     namespace: generate-service
