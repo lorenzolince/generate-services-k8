@@ -17,8 +17,8 @@ spec:
           value: https://generate-service.com
         - name: paipalSecret_Name
           value: paypal-dev
-        - name: argocd-sync-trigger
-          value: "2025-12-13T05:15:00Z"
+        - name: AUTH_DEBUG
+          value: true
   destination:
     server: https://kubernetes.default.svc
     namespace: generate-service
