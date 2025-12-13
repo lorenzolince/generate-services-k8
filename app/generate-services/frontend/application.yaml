@@ -13,13 +13,12 @@ spec:
       valueFiles:
         - deployment_values.yaml
       parameters:
+        - name: image.repository
+          value: registry.llince.com/generate-service-ui
         - name: NEXTAUTH_URL
           value: "https://generate-service.com"
         - name: paipalSecret_Name
           value: "paypal-dev"
-        - name: AUTH_DEBUG
-          value: "true"
-
   destination:
     server: https://kubernetes.default.svc
     namespace: generate-service
