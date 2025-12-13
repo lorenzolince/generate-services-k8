@@ -16,7 +16,7 @@ spec:
         - name: genericservice
           value: generatebackend
         - name: image.repository
-          value: registry.llince.com/generate-service-backend
+          value: registry.llince.com/generate-service-backend:2
         - name: service.enabled
           value: "true"
         - name: LIQUIBASE_RUN
