@@ -14,7 +14,9 @@ spec:
         - deployment_values.yaml
       parameters:
         - name: image.repository
-          value: registry.llince.com/generate-service-ui:2
+          value: registry.llince.com/generate-service-ui
+        - name: image.tag
+          value: "2"
         - name: NEXTAUTH_URL
           value: "https://generate-service.com"
         - name: paipalSecret_Name
