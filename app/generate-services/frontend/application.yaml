@@ -16,7 +16,7 @@ spec:
         - name: image.repository
           value: registry.llince.com/generate-service-ui
         - name: image.tag
-          value: "4"
+          value: "5"
         - name: NEXTAUTH_URL
           value: "https://generate-service.com"
         - name: paipalSecret_Name
