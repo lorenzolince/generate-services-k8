@@ -36,11 +36,11 @@ spec:
         - name: envData.SFTP_REMOTE_PATH
           value: ./files/compile
         - name: envData.SFTP_DELAY
-          value: 5000
+          value: "5000"
         - name: envData.SFTP_PER_POLL
-          value: 10
+          value: "10"
         - name: envData.SFTP_TIME_OUT
-          value: 30000
+          value: "30000"
         - name: envData.NEXTAUTH_URL
           value: http://genericserviceui
         - name: envData.API_JAVA_OPTION
@@ -48,7 +48,7 @@ spec:
         - name: hostAliases.enabled
           value: "true"
         - name: hostAliases.items[0].ip
-          value: 192.168.0.38
+          value: "192.168.0.38"
         - name: hostAliases.items[0].hostnames[0]
           value: db.oracle.lince.com 
         - name: hostAliases.items[0].hostnames[1]
@@ -64,7 +64,7 @@ spec:
         - name: hostAliases.items[0].hostnames[5]
           value: test.lince.com 
         - name: hostAliases.items[1].ip
-          value: 192.168.0.7
+          value: "192.168.0.7"
         - name: hostAliases.items[1].hostnames[0]
           value: jenkins.lince.com
   destination:
