@@ -22,6 +22,7 @@ spec:
         valuesFrom:
         - configMapRef:
             name: values-secrets
+          valuesKey: value.secret.yaml
         parameters:
           - name: fullnameOverride
             value: generatebackend
