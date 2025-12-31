@@ -10,7 +10,6 @@ spec:
     - repoURL: https://github.com/lorenzolince/generate-services-k8.git
       targetRevision: HEAD
       path: app/generate-services/backend/secrets
-      ref: secrets
       plugin:
         name: my-plugin-v1.0
       
@@ -20,7 +19,11 @@ spec:
       helm:
         valueFiles:
           - default_value.yaml
-          - secrets://$secrets/value.secret.yaml
+        valuesFrom:
+          - kind: ConfigMap
+            name: values-secrets
+            valuesKey: value.secret.yaml
+            optional: false     
         parameters:
           - name: fullnameOverride
             value: generatebackend
