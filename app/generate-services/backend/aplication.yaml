@@ -13,6 +13,10 @@ spec:
       ref: secrets
       plugin:
         name: my-plugin-v1.0
+      kustomize:
+        commonAnnotations:
+          argocd.argoproj.io/sync-wave: "-1"
+
       
     - repoURL: https://github.com/lorenzolince/genericDeploy.git
       targetRevision: HEAD
