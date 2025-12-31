@@ -5,8 +5,13 @@ metadata:
   namespace: argocd   # Argo CD siempre gestiona sus apps desde este namespace
 spec:
   project: generate-service
-  source:
-    repoURL: https://github.com/lorenzolince/genericDeploy.git
+  sources:
+  - repoURL: https://github.com/lorenzolince/generate-services-k8.git
+    path: app/generate-services/backend/secrets
+    targetRevision: HEAD
+    plugin:
+      name: my-plugin-v1.0
+  - repoURL: https://github.com/lorenzolince/genericDeploy.git
     targetRevision: HEAD   # o "main" si tu branch principal es main
     path: helmcharts/llince
     helm:
