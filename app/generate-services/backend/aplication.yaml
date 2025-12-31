@@ -10,9 +10,9 @@ spec:
     - repoURL: https://github.com/lorenzolince/generate-services-k8.git
       targetRevision: HEAD
       path: app/generate-services/backend/secrets
-      ref: secrets
       plugin:
         name: my-plugin-v1.0
+      ref: secrets
     - repoURL: https://github.com/lorenzolince/genericDeploy.git
       targetRevision: HEAD
       path: helmcharts/llince
