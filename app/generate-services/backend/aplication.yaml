@@ -19,7 +19,9 @@ spec:
       helm:
         valueFiles:
           - default_value.yaml
-          - $secrets/value.secret.yaml 
+        valuesFrom:
+        - configMapRef:
+            name: values-secrets
         parameters:
           - name: fullnameOverride
             value: generatebackend
