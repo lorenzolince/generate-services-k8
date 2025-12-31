@@ -2,79 +2,88 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: generatebackend
-  namespace: argocd   # Argo CD siempre gestiona sus apps desde este namespace
+  namespace: argocd
 spec:
   project: generate-service
+
   sources:
-  - repoURL: https://github.com/lorenzolince/generate-services-k8.git
-    path: app/generate-services/backend/secrets
-    targetRevision: HEAD
-    plugin:
-      name: my-plugin-v1.0
-  - repoURL: https://github.com/lorenzolince/genericDeploy.git
-    targetRevision: HEAD   # o "main" si tu branch principal es main
-    path: helmcharts/llince
-    helm:
-      valueFiles:
-        - default_value.yaml
-      valuesFrom:
-        - secretRef:
-            name: generatebackend-values
-            key: value.secret.yaml
-      parameters:
-        - name: fullnameOverride
-          value: generatebackend
-        - name: image.repository
-          value: registry.llince.com/generate-service-backend
-        - name: image.tag
-          value: "5"
-        - name: service.enabled
-          value: "true"
-        - name: envData.LIQUIBASE_RUN
-          value: "true"
-        - name: ingress.enabled
-          value: "true"
-        - name: ingress.hosts[0].host
-          value: "genericservice.com"
-        - name: replicaCount
-          value: "2"
-        - name: envData.SFTP_REMOTE_PATH
-          value: ./files/compile
-        - name: envData.SFTP_DELAY
-          value: "5000"
-        - name: envData.SFTP_PER_POLL
-          value: "10"
-        - name: envData.SFTP_TIME_OUT
-          value: "30000"
-        - name: envData.NEXTAUTH_URL
-          value: http://genericserviceui
-        - name: envData.API_JAVA_OPTION
-          value: -Xms1g -Xmx1g -Xss512k -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+AlwaysPreTouch -XX:+ParallelRefProcEnabled -XX:InitiatingHeapOccupancyPercent=30 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/heap-dump.hprof -Duser.timezone=UTC
-        - name: hostAliases.enabled
-          value: "true"
-        - name: hostAliases.items[0].ip
-          value: "192.168.0.38"
-        - name: hostAliases.items[0].hostnames[0]
-          value: db.oracle.lince.com 
-        - name: hostAliases.items[0].hostnames[1]
-          value: db.sqlserver.lince.com 
-        - name: hostAliases.items[0].hostnames[2]
-          value: db.mysql.lince.com
-        - name: hostAliases.items[0].hostnames[0]
-          value: db.oracle.lince.com 
-        - name: hostAliases.items[0].hostnames[3]
-          value: db.mariadb.lince.com
-        - name: hostAliases.items[0].hostnames[4]
-          value: db.postgresql.lince.com 
-        - name: hostAliases.items[0].hostnames[5]
-          value: test.lince.com 
-        - name: hostAliases.items[1].ip
-          value: "192.168.0.7"
-        - name: hostAliases.items[1].hostnames[0]
-          value: jenkins.lince.com
+    - repoURL: https://github.com/lorenzolince/generate-services-k8.git
+      targetRevision: HEAD
+      path: app/generate-services/backend/secrets
+      ref: secrets
+      plugin:
+        name: my-plugin-v1.0
+    - repoURL: https://github.com/lorenzolince/genericDeploy.git
+      targetRevision: HEAD
+      path: helmcharts/llince
+      helm:
+        valueFiles:
+          - default_value.yaml
+          - $secrets/value.secret.yaml 
+        parameters:
+          - name: fullnameOverride
+            value: generatebackend
+          - name: image.repository
+            value: registry.llince.com/generate-service-backend
+          - name: image.tag
+            value: "5"
+          - name: replicaCount
+            value: "2"
+
+          - name: service.enabled
+            value: "true"
+
+          - name: ingress.enabled
+            value: "true"
+          - name: ingress.hosts[0].host
+            value: genericservice.com
+
+          - name: envData.LIQUIBASE_RUN
+            value: "true"
+          - name: envData.SFTP_REMOTE_PATH
+            value: ./files/compile
+          - name: envData.SFTP_DELAY
+            value: "5000"
+          - name: envData.SFTP_PER_POLL
+            value: "10"
+          - name: envData.SFTP_TIME_OUT
+            value: "30000"
+          - name: envData.NEXTAUTH_URL
+            value: http://genericserviceui
+          - name: envData.API_JAVA_OPTION
+            value: >
+              -Xms1g -Xmx1g -Xss512k -XX:+UseG1GC
+              -XX:MaxGCPauseMillis=200
+              -XX:+AlwaysPreTouch
+              -XX:+ParallelRefProcEnabled
+              -XX:InitiatingHeapOccupancyPercent=30
+              -XX:+HeapDumpOnOutOfMemoryError
+              -XX:HeapDumpPath=/tmp/heap-dump.hprof
+              -Duser.timezone=UTC
+
+          - name: hostAliases.enabled
+            value: "true"
+          - name: hostAliases.items[0].ip
+            value: "192.168.0.38"
+          - name: hostAliases.items[0].hostnames[0]
+            value: db.oracle.lince.com
+          - name: hostAliases.items[0].hostnames[1]
+            value: db.sqlserver.lince.com
+          - name: hostAliases.items[0].hostnames[2]
+            value: db.mysql.lince.com
+          - name: hostAliases.items[0].hostnames[3]
+            value: db.mariadb.lince.com
+          - name: hostAliases.items[0].hostnames[4]
+            value: db.postgresql.lince.com
+          - name: hostAliases.items[1].ip
+            value: "192.168.0.7"
+          - name: hostAliases.items[1].hostnames[0]
+            value: jenkins.lince.com
+
   destination:
     server: https://kubernetes.default.svc
     namespace: generate-service
+
   syncPolicy:
     automated:
       prune: true
