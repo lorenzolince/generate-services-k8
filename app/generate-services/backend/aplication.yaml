@@ -13,14 +13,14 @@ spec:
       ref: secrets
       plugin:
         name: my-plugin-v1.0
+      
     - repoURL: https://github.com/lorenzolince/genericDeploy.git
       targetRevision: HEAD
       path: helmcharts/llince
       helm:
         valueFiles:
           - default_value.yaml
-          - $secrets/value.secret.yaml
-
+          - secrets://$secrets/value.secret.yaml
         parameters:
           - name: fullnameOverride
             value: generatebackend
