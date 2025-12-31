@@ -11,7 +11,7 @@ spec:
       targetRevision: HEAD
       path: app/generate-services/backend/secrets
       plugin:
-        name: my-plugin
+        name: my-plugin-v1.0
     - repoURL: https://github.com/lorenzolince/genericDeploy.git
       targetRevision: HEAD
       path: helmcharts/llince
