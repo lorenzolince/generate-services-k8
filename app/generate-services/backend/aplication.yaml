@@ -12,9 +12,10 @@ spec:
       helm:
         valueFiles:
           - default_value.yaml
+          - secrets://secrets/values.secrets.yaml
         fileParameters:
          - name: extraSecrets
-           path: secrets://secrets/values.secrets.yaml
+           path: secrets://app/generate-services/back/secrets/values.secrets.yaml
         parameters:
           - name: fullnameOverride
             value: generatebackend
