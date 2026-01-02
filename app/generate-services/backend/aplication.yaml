@@ -22,17 +22,14 @@ spec:
             value: "5"
           - name: replicaCount
             value: "2"
-
           - name: service.enabled
             value: "true"
-
           - name: ingress.enabled
             value: "true"
           - name: ingress.hosts[0].host
             value: genericservice.com
-
           - name: envData.LIQUIBASE_RUN
-            value: "true"
+            value: "false"
           - name: envData.SFTP_REMOTE_PATH
             value: ./files/compile
           - name: envData.SFTP_DELAY
