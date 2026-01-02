@@ -12,14 +12,14 @@ spec:
       helm:
         valueFiles:
           - default_value.yaml
-          - secrets://https://raw.githubusercontent.com/lorenzolince/generate-services-k8/main/app/generate-services/backend/secrets/values.secrets.yaml
+          - secrets://https://raw.githubusercontent.com/lorenzolince/generate-services-k8/main/app/generate-services/backend/values.secrets.yaml
         parameters:
           - name: fullnameOverride
             value: generatebackend
           - name: image.repository
             value: registry.llince.com/generate-service-backend
           - name: image.tag
-            value: "5"
+            value: "latest"
           - name: replicaCount
             value: "2"
           - name: service.enabled
