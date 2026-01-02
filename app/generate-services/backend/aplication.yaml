@@ -6,16 +6,18 @@ metadata:
 spec:
   project: generate-service
   sources: 
+   
     - repoURL: https://github.com/lorenzolince/generate-services-k8.git
       targetRevision: HEAD
-      path: app/generate-services/backend/secrets
       ref: secrets
+      path: app/generate-services/backend/secrets
+      
     - repoURL: https://github.com/lorenzolince/genericDeploy.git
       targetRevision: HEAD
       path: helmcharts/llince
       helm:
         valueFiles:
-          - ../helmcharts/llince/default_value.yaml
+          - default_value.yaml
           - secrets://$secrets/values.secrets.yaml
         parameters:
           - name: fullnameOverride
