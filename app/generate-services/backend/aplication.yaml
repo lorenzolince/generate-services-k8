@@ -15,7 +15,7 @@ spec:
           - secrets://secrets/values.secrets.yaml
         fileParameters:
          - name: extraSecrets
-           path: secrets://app/generate-services/back/secrets/values.secrets.yaml
+           path: secrets://../../secrets/values.secrets.yaml
         parameters:
           - name: fullnameOverride
             value: generatebackend
