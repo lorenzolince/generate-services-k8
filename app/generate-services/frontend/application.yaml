@@ -21,6 +21,8 @@ spec:
           value: "https://generate-service.com"
         - name: paipalSecret_Name
           value: "paypal-dev"
+        - name: API_ENDPOINT
+          value: "http://generatebackend"
   destination:
     server: https://kubernetes.default.svc
     namespace: generate-service
