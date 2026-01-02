@@ -9,7 +9,7 @@ spec:
    
     - repoURL: https://github.com/lorenzolince/generate-services-k8.git
       targetRevision: HEAD
-      ref: secrets
+      ref: secreto
       path: app/generate-services/backend/secrets
       
     - repoURL: https://github.com/lorenzolince/genericDeploy.git
@@ -18,7 +18,7 @@ spec:
       helm:
         valueFiles:
           - default_value.yaml
-          - secrets://secrets/values.secrets.yaml
+          - secrets:secreto/values.secrets.yaml
         parameters:
           - name: fullnameOverride
             value: generatebackend
