@@ -5,20 +5,14 @@ metadata:
   namespace: argocd
 spec:
   project: generate-service
-  sources: 
-   
-    - repoURL: https://github.com/lorenzolince/generate-services-k8.git
-      targetRevision: HEAD
-      ref: secreto
-      path: app/generate-services/backend/secrets
-      
-    - repoURL: https://github.com/lorenzolince/genericDeploy.git
+  source: 
+      repoURL: https://github.com/lorenzolince/genericDeploy.git
       targetRevision: HEAD
       path: helmcharts/llince
       helm:
         valueFiles:
           - default_value.yaml
-          - secrets:secreto/values.secrets.yaml
+          - secrets://https://raw.githubusercontent.com/lorenzolince/generate-services-k8/main/app/generate-services/backend/secrets/values.secrets.yaml
         parameters:
           - name: fullnameOverride
             value: generatebackend
