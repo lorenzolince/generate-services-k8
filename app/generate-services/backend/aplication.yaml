@@ -12,7 +12,7 @@ spec:
       helm:
         valueFiles:
           - default_value.yaml
-          - secrets://../../secrets/values.secrets.yaml
+          - secrets://helmcharts/llince/../../secrets/values.secrets.yaml
         parameters:
           - name: fullnameOverride
             value: generatebackend
