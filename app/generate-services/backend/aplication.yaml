@@ -11,8 +11,8 @@ spec:
       path: helmcharts/llince
       helm:
         valueFiles:
-          - default_value.yaml
-          - secrets://helmcharts/llince/../../secrets/values.secrets.yaml
+          - ../helmcharts/llince/default_value.yaml
+          - secrets://secrets/values.secrets.yaml
         parameters:
           - name: fullnameOverride
             value: generatebackend
