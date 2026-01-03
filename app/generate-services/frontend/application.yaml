@@ -17,9 +17,8 @@ spec:
           tag: 5
           containerPort: 3000
           pullPolicy: Always
-      imagePullSecrets:
-        enabled: true
-       
+        imagePullSecrets:
+          enabled: true
         service:
           enabled: true
 
