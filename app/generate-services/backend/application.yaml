@@ -10,39 +10,42 @@ spec:
       targetRevision: HEAD
       path: helmcharts/llince
       helm:
-      valuesObject:
-        fullnameOverride: "generatebackend"
-        replicaCount: 2
-        image:
-          repository: registry.llince.com/generate-service-backend
-          tag: 20
-        service:
-          enabled: true
-        ingress:
-          enabled: true
-          pathType: Prefix
-          annotations:
-             nginx.ingress.kubernetes.io/rewrite-target: /$1
-             nginx.ingress.kubernetes.io/ssl-redirect: "false"
-             nginx.ingress.kubernetes.io/use-regex: "true"
-          hosts:
-            - host: genericservice.com
-              paths:
-                - /(.*)
-        hostAliases:
-          enabled: true
-          items:
-            - ip: "192.168.0.38"
-              hostnames:
-                - db.oracle.lince.com
-                - db.sqlserver.lince.com
-                - db.mysql.lince.com
-                - db.mariadb.lince.com
-                - db.postgresql.lince.com
-            - ip: "192.168.0.7"
-              hostnames:
-                - jenkins.lince.com
-
+        valuesObject:
+          fullnameOverride: "generatebackend"
+          replicaCount: 2
+        
+          image:
+            repository: registry.llince.com/generate-service-backend
+            tag: 20
+        
+          service:
+            enabled: true
+        
+          ingress:
+            enabled: true
+            pathType: Prefix
+            annotations:
+               nginx.ingress.kubernetes.io/rewrite-target: /$1
+               nginx.ingress.kubernetes.io/ssl-redirect: "false"
+               nginx.ingress.kubernetes.io/use-regex: "true"
+            hosts:
+              - host: genericservice.com
+                paths:
+                  - /(.*)
+          hostAliases:
+            enabled: true
+            items:
+              - ip: "192.168.0.38"
+                hostnames:
+                  - db.oracle.lince.com
+                  - db.sqlserver.lince.com
+                  - db.mysql.lince.com
+                  - db.mariadb.lince.com
+                  - db.postgresql.lince.com
+              - ip: "192.168.0.7"
+                hostnames:
+                  - jenkins.lince.com
+        
         valueFiles:
           - default_value.yaml
           - secrets://https://raw.githubusercontent.com/lorenzolince/generate-services-k8/main/app/generate-services/backend/values.secrets.yaml
