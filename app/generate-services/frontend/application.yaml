@@ -2,27 +2,58 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: genericserviceui
-  namespace: argocd   # Argo CD siempre gestiona sus apps desde este namespace
+  namespace: argocd  
 spec:
   project: generate-service
   source:
     repoURL: https://github.com/lorenzolince/genericDeploy.git
-    targetRevision: HEAD   # o "main" si tu branch principal es main
-    path: helmcharts/genericserviceui
+    targetRevision: HEAD   
+    path: helmcharts/llince
     helm:
+      valuesObject:
+        fullnameOverride: "genericserviceui"
+        image:
+          repository: registry.llince.com/generate-service-ui
+          tag: 5
+          containerPort: 3000
+          pullPolicy: Always
+       
+        service:
+          enabled: true
+
+        ingress:
+          enabled: true
+          pathType: Prefix
+          annotations:
+            nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+            nginx.ingress.kubernetes.io/rewrite-target: /$1
+            nginx.ingress.kubernetes.io/ssl-redirect: "false"
+            nginx.ingress.kubernetes.io/use-regex: "false"
+          hosts:
+            - host: genericserviceui.com
+              paths:
+                - /(.*)
       valueFiles:
-        - deployment_values.yaml
+         - default_value.yaml
+         - secrets://https://raw.githubusercontent.com/lorenzolince/generate-services-k8/main/app/generate-services/frontend//values.secrets.yaml
       parameters:
-        - name: image.repository
-          value: registry.llince.com/generate-service-ui
-        - name: image.tag
-          value: "5"
-        - name: NEXTAUTH_URL
+        - name: envData.NEXTAUTH_URL
           value: "https://generate-service.com"
-        - name: paipalSecret_Name
-          value: "paypal-dev"
-        - name: API_ENDPOINT
-          value: "http://generatebackend"
+        - name: envData.API_ENDPOINT
+          value: "http://generatebackend-v1"
+        - name: envData.PUBLIC_API_ENDPOINT
+          value: "https://api.generate-service.com"
+        - name: envData.EXPIRE_TOKEN
+          value: "60"
+        - name: envData.EXPIRE_SESSION
+          value: "60"
+        - name: envData.NODE_OPTIONS
+          value: "--max-old-space-size=4096"
+        - name: envData.AUTH_DEBUG
+          value: "false"
+        - name: envData.NODE_ENV
+          value: "production"
+
   destination:
     server: https://kubernetes.default.svc
     namespace: generate-service
