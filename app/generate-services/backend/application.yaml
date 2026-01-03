@@ -10,24 +10,43 @@ spec:
       targetRevision: HEAD
       path: helmcharts/llince
       helm:
+      valuesObject:
+        fullnameOverride: "generatebackend"
+        replicaCount: 2
+        image:
+          repository: registry.llince.com/generate-service-backend
+          tag: 20
+        service:
+          enabled: true
+        ingress:
+          enabled: true
+          pathType: Prefix
+          annotations:
+             nginx.ingress.kubernetes.io/rewrite-target: /$1
+             nginx.ingress.kubernetes.io/ssl-redirect: "false"
+             nginx.ingress.kubernetes.io/use-regex: "true"
+          hosts:
+            - host: genericservice.com
+              paths:
+                - /(.*)
+        hostAliases:
+          enabled: true
+          items:
+            - ip: "192.168.0.38"
+              hostnames:
+                - db.oracle.lince.com
+                - db.sqlserver.lince.com
+                - db.mysql.lince.com
+                - db.mariadb.lince.com
+                - db.postgresql.lince.com
+            - ip: "192.168.0.7"
+              hostnames:
+                - jenkins.lince.com
+
         valueFiles:
           - default_value.yaml
           - secrets://https://raw.githubusercontent.com/lorenzolince/generate-services-k8/main/app/generate-services/backend/values.secrets.yaml
         parameters:
-          - name: fullnameOverride
-            value: generatebackend
-          - name: image.repository
-            value: registry.llince.com/generate-service-backend
-          - name: image.tag
-            value: "20"
-          - name: replicaCount
-            value: "2"
-          - name: service.enabled
-            value: "true"
-          - name: ingress.enabled
-            value: "true"
-          - name: ingress.hosts[0].host
-            value: genericservice.com
           - name: envData.LIQUIBASE_RUN
             value: "false"
           - name: envData.SFTP_REMOTE_PATH
@@ -50,25 +69,6 @@ spec:
               -XX:+HeapDumpOnOutOfMemoryError
               -XX:HeapDumpPath=/tmp/heap-dump.hprof
               -Duser.timezone=UTC
-
-          - name: hostAliases.enabled
-            value: "true"
-          - name: hostAliases.items[0].ip
-            value: "192.168.0.38"
-          - name: hostAliases.items[0].hostnames[0]
-            value: db.oracle.lince.com
-          - name: hostAliases.items[0].hostnames[1]
-            value: db.sqlserver.lince.com
-          - name: hostAliases.items[0].hostnames[2]
-            value: db.mysql.lince.com
-          - name: hostAliases.items[0].hostnames[3]
-            value: db.mariadb.lince.com
-          - name: hostAliases.items[0].hostnames[4]
-            value: db.postgresql.lince.com
-          - name: hostAliases.items[1].ip
-            value: "192.168.0.7"
-          - name: hostAliases.items[1].hostnames[0]
-            value: jenkins.lince.com
 
   destination:
     server: https://kubernetes.default.svc
