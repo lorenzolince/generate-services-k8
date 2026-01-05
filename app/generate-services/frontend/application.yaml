@@ -34,6 +34,13 @@ spec:
             - host: genericserviceui.com
               paths:
                 - /(.*)
+        resources:
+          limits:
+            cpu: 500m 
+            memory: 512Mi  
+          requests:
+            cpu: 100m      
+            memory: 256Mi  
       valueFiles:
          - default_value.yaml
          - secrets://https://raw.githubusercontent.com/lorenzolince/generate-services-k8/main/app/generate-services/frontend//values.secrets.yaml
