@@ -11,20 +11,20 @@ spec:
         repoURL: https://github.com/lorenzolince/generate-service-backend.git
         revision: HEAD
         files:
-          - path: argo/api.yaml
+          - path: app/generate-services/backend/api.yaml
     - git:
         repoURL: https://github.com/lorenzolince/generate-service-ui.git
         revision: HEAD
         files:
-          - path: argo/api.yaml
+          - path: app/generate-services/frontend/api.yaml
   template:
     metadata:
-      name: '{{apiName}}'
+      name: '{{projectName}}'
     spec:
-      project: default
+      project: {{apiName}}
       source:
         repoURL: https://github.com/lorenzolince/genericDeploy.git
-        targetRevision: HEAD
+        targetRevision: '{{targetRevisionName}}'
         path: helmcharts/llince
         helm:
           valuesObject:

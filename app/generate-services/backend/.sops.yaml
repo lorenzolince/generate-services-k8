@@ -1,0 +1,3 @@
+creation_rules:
+  - path_regex: tmp.yaml$
+    encrypted_regex: '^(secretData.*|username|password)$'

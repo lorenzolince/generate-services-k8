@@ -1,0 +1,47 @@
+fullnameOverride: "generatebackend"
+replicaCount: 2
+
+service:
+  enabled: true
+
+ingress:
+  enabled: true
+  pathType: Prefix
+  annotations:
+     nginx.ingress.kubernetes.io/rewrite-target: /$1
+     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+     nginx.ingress.kubernetes.io/use-regex: "true"
+  hosts:
+    - host: genericservice.com
+      paths:
+        - /(.*)
+hostAliases:
+  enabled: true
+  items:
+    - ip: "192.168.0.38"
+      hostnames:
+        - db.oracle.lince.com
+        - db.sqlserver.lince.com
+        - db.mysql.lince.com
+        - db.mariadb.lince.com
+        - db.postgresql.lince.com
+    - ip: "192.168.0.7"
+      hostnames:
+        - jenkins.lince.com
+
+resources:
+  limits:
+    cpu: 1500m
+    memory: 1Gi
+  requests:
+    cpu: 150m
+    memory: 512m
+
+envData:
+   LIQUIBASE_RUN: "false"
+   SFTP_DELAY: "5000"
+   SFTP_PER_POLL: "10"
+   SFTP_TIME_OUT: "30000"
+   NEXTAUTH_URL: "http://genericserviceui"
+   API_JAVA_OPTION:  -Xms512m -Xmx512m -Duser.timezone=UTC
+

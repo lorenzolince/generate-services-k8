@@ -1,0 +1,9 @@
+apiName: genericserviceui
+valueNamesPace: generate-service
+projectName: generate-service
+targetRevisionName: HEAD
+repositoryName:  registry.llince.com/generate-service-ui
+tagVersion: "8"
+manualRender: "1"
+valuesFile: https://raw.githubusercontent.com/lorenzolince/generate-services-k8/main/app/generate-services/frontend/values.yaml
+valuesSecretFile: secrets://https://raw.githubusercontent.com/lorenzolince/generate-services-k8/main/app/generate-services/frontend/values.secrets.yaml
