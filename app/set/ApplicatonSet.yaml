@@ -8,12 +8,12 @@ spec:
     preserveResourcesOnDeletion: false
   generators:
     - git:
-        repoURL: https://github.com/lorenzolince/generate-service-backend.git
+        repoURL: https://github.com/lorenzolince/generate-services-k8.git
         revision: HEAD
         files:
           - path: app/generate-services/backend/api.yaml
     - git:
-        repoURL: https://github.com/lorenzolince/generate-service-ui.git
+        repoURL: https://github.com/lorenzolince/generate-services-k8.git
         revision: HEAD
         files:
           - path: app/generate-services/frontend/api.yaml
