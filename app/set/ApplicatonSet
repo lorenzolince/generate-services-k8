@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: agenerarte-service
+  namespace: argocd
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: false
+  generators:
+    - git:
+        repoURL: https://github.com/lorenzolince/generate-service-backend.git
+        revision: HEAD
+        files:
+          - path: argo/api.yaml
+    - git:
+        repoURL: https://github.com/lorenzolince/generate-service-ui.git
+        revision: HEAD
+        files:
+          - path: argo/api.yaml
+  template:
+    metadata:
+      name: '{{apiName}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/lorenzolince/genericDeploy.git
+        targetRevision: HEAD
+        path: helmcharts/llince
+        helm:
+          valuesObject:
+            fullnameOverride: '{{apiName}}'
+            image:
+              repository: '{{repositoryName}}'
+              tag: '{{tagVersion}}'
+            manualRender: '{{manualRender}}'
+          ignoreMissingValueFiles: true
+          valueFiles:
+            - default_value.yaml
+            - '{{valuesFile}}'
+            - '{{valuesSecretFile}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{valueNamesPace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
