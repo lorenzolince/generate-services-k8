@@ -19,9 +19,9 @@ spec:
           - path: app/generate-services/frontend/api.yaml
   template:
     metadata:
-      name: '{{projectName}}'
+      name: '{{apiName}}'
     spec:
-      project: {{apiName}}
+      project: '{{projectName}}'
       source:
         repoURL: https://github.com/lorenzolince/genericDeploy.git
         targetRevision: '{{targetRevisionName}}'
