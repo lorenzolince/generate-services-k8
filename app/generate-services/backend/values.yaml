@@ -40,6 +40,6 @@ envData:
    SFTP_DELAY: "5000"
    SFTP_PER_POLL: "10"
    SFTP_TIME_OUT: "30000"
-   NEXTAUTH_URL: "http://genericserviceui"
+   NEXTAUTH_URL: "http://genericserviceui-v1"
    API_JAVA_OPTION:  -Xms512m -Xmx512m -Duser.timezone=UTC
 
