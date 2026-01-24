@@ -30,7 +30,7 @@ hostAliases:
 resources:
   limits:
     cpu: 1500m
-    memory: 1Gi
+    memory: 2Gi
   requests:
     cpu: 150m
     memory: 512m
@@ -42,4 +42,13 @@ envData:
    SFTP_TIME_OUT: "30000"
    NEXTAUTH_URL: "http://genericserviceui-v1"
    API_JAVA_OPTION:  -Xms512m -Xmx512m -Duser.timezone=UTC
-
+   MAIL_HOST_SMTP: smtp.titan.email
+   MAIL_PORT_SMTP: 587
+   MAIL_IS_AUTH: true
+   MAIL_IS_DEBUG: false
+   MAIL_IS_STARTTLS: true
+   MAIL_HOST_POP: pop.titan.email
+   MAIL_POP_IS_DEBUG: false
+   MAIL_PORT_POP: 995
+   MAIL_POP_CRON: 0 * * * * *
+   RABBIT_ERROR_MAIL_QUEUE: error_email
