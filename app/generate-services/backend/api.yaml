@@ -3,7 +3,7 @@ valueNamesPace: generate-service
 projectName: generate-service
 targetRevisionName: HEAD
 repositoryName: registry.llince.com/generate-service-backend
-tagVersion: "5"
+tagVersion: "6"
 manualRender: "2"
 valuesFile: https://raw.githubusercontent.com/lorenzolince/generate-services-k8/main/app/generate-services/backend/values.yaml
 valuesSecretFile: secrets://https://raw.githubusercontent.com/lorenzolince/generate-services-k8/main/app/generate-services/backend/values.secrets.yaml
